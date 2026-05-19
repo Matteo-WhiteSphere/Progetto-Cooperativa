@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coop - Supermercato</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* Barra superiore */
+        .top-bar {
+            background-color: #e31837;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cart {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: white;
+            color: #e31837;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cart:hover {
+            background-color: #f0f0f0;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .cart-total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .account {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: white;
+            color: #e31837;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .account:hover {
+            background-color: #f0f0f0;
+        }
+
+        .account-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        /* Layout principale */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Barra laterale */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #e31837;
+        }
+
+        .category {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .category:hover {
+            background-color: #34495e;
+            border-left-color: #e31837;
+        }
+
+        .category.active {
+            background-color: #34495e;
+            border-left-color: #e31837;
+        }
+
+        .category-icon {
+            margin-right: 10px;
+        }
+
+        /* Contenuto principale */
+        .content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .content h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Modal account */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .modal-content h2 {
+            color: #e31837;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e31837;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #c41530;
+        }
+
+        .close-modal {
+            margin-top: 10px;
+            background-color: #7f8c8d;
+        }
+
+        .close-modal:hover {
+            background-color: #6c7a7d;
+        }
+
+        /* Prodotti di esempio */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            color: #e31837;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart {
+            padding: 8px 15px;
+            background-color: #e31837;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #c41530;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra superiore -->
+    <div class="top-bar">
+        <div class="logo">
+            <img src="img/Coop.png" alt="Coop Logo">
+            <span>Coop</span>
+        </div>
+        <div class="top-right">
+            <div class="cart" onclick="showCart()">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-total">€0.00</span>
+            </div>
+            <div class="account" onclick="showAccountModal()">
+                <span class="account-icon">👤</span>
+                <span>Account</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Layout principale -->
+    <div class="main-container">
+        <!-- Barra laterale -->
+        <div class="sidebar">
+            <h2>Categorie</h2>
+            <div class="category active" onclick="selectCategory(this, 'alimentari')">
+                <span class="category-icon">🍎</span>
+                <span>Reparto Alimentari</span>
+            </div>
+            <div class="category" onclick="selectCategory(this, 'abbigliamento')">
+                <span class="category-icon">👕</span>
+                <span>Reparto Abbigliamento</span>
+            </div>
+            <div class="category" onclick="selectCategory(this, 'casalinghi')">
+                <span class="category-icon">🏠</span>
+                <span>Reparto Casalinghi</span>
+            </div>
+            <div class="category" onclick="selectCategory(this, 'panificio')">
+                <span class="category-icon">🍞</span>
+                <span>Reparto Panificio</span>
+            </div>
+            <div class="category" onclick="selectCategory(this, 'surgelati')">
+                <span class="category-icon">❄️</span>
+                <span>Reparto Surgelati</span>
+            </div>
+        </div>
+
+        <!-- Contenuto principale -->
+        <div class="content">
+            <h1 id="category-title">Reparto Alimentari</h1>
+            <div class="products-grid" id="products-grid">
+                <!-- I prodotti verranno caricati qui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Account -->
+    <div class="modal" id="account-modal">
+        <div class="modal-content">
+            <h2>Accedi al tuo account</h2>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Inserisci la tua email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="Inserisci la tua password">
+            </div>
+            <button class="btn" onclick="login()">Accedi</button>
+            <button class="btn close-modal" onclick="closeAccountModal()">Chiudi</button>
+        </div>
+    </div>
+
+    <script>
+        // Dati del carrello
+        let cartTotal = 0;
+        let cartItems = [];
+
+        // Dati dei prodotti per categoria
+        const products = {
+            alimentari: [
+                { name: "Pasta Barilla", price: 1.29, icon: "🍝" },
+                { name: "Sugo Pomodoro", price: 2.50, icon: "🥫" },
+                { name: "Olio d'Oliva", price: 8.99, icon: "🫒" },
+                { name: "Riso Arborio", price: 3.20, icon: "🍚" },
+                { name: "Tonno in scatola", price: 4.50, icon: "🐟" },
+                { name: "Passata di pomodoro", price: 1.80, icon: "🍅" }
+            ],
+            abbigliamento: [
+                { name: "T-shirt Coop", price: 15.99, icon: "👕" },
+                { name: "Maglione Invernale", price: 29.99, icon: "🧥" },
+                { name: "Pantaloni Jeans", price: 45.00, icon: "👖" },
+                { name: "Scarpe Sportive", price: 59.99, icon: "👟" },
+                { name: "Cappello", price: 12.50, icon: "🧢" },
+                { name: "Sciarpa", price: 18.00, icon: "🧣" }
+            ],
+            casalinghi: [
+                { name: "Detersivo Piatti", price: 3.50, icon: "🧴" },
+                { name: "Spugne", price: 2.99, icon: "🧽" },
+                { name: "Sacchi Immondizia", price: 5.00, icon: "🗑️" },
+                { name: "Detersivo Lavatrice", price: 8.50, icon: "🧺" },
+                { name: "Panni Microfibra", price: 6.99, icon: "🧹" },
+                { name: "Ammoniaca", price: 2.50, icon: "🧪" }
+            ],
+            panificio: [
+                { name: "Pane Casereccio", price: 2.50, icon: "🍞" },
+                { name: "Focaccia", price: 3.00, icon: "🫓" },
+                { name: "Pizza Margherita", price: 5.50, icon: "🍕" },
+                { name: "Grissini", price: 1.80, icon: "🥖" },
+                { name: "Torta della Nonna", price: 12.00, icon: "🥧" },
+                { name: "Cornetti", price: 4.50, icon: "🥐" }
+            ],
+            surgelati: [
+                { name: "Piselli Surgelati", price: 2.00, icon: "🟢" },
+                { name: "Patatine Fritte", price: 3.50, icon: "🍟" },
+                { name: "Gelato Vaniglia", price: 5.99, icon: "🍦" },
+                { name: "Pizza Surgelata", price: 4.50, icon: "🍕" },
+                { name: "Pollo Surgelato", price: 7.50, icon: "🍗" },
+                { name: "Verdure Miste", price: 3.00, icon: "🥦" }
+            ]
+        };
+
+        // Carica i prodotti iniziali
+        function loadProducts(category) {
+            const grid = document.getElementById('products-grid');
+            const title = document.getElementById('category-title');
+            
+            const categoryNames = {
+                alimentari: 'Reparto Alimentari',
+                abbigliamento: 'Reparto Abbigliamento',
+                casalinghi: 'Reparto Casalinghi',
+                panificio: 'Reparto Panificio',
+                surgelati: 'Reparto Surgelati'
+            };
+            
+            title.textContent = categoryNames[category];
+            grid.innerHTML = '';
+            
+            products[category].forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">${product.icon}</div>
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">€${product.price.toFixed(2)}</div>
+                    <button class="add-to-cart" onclick="addToCart('${product.name}', ${product.price})">Aggiungi al carrello</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Seleziona categoria
+        function selectCategory(element, category) {
+            // Rimuovi classe active da tutte le categorie
+            document.querySelectorAll('.category').forEach(cat => {
+                cat.classList.remove('active');
+            });
+            // Aggiungi classe active alla categoria selezionata
+            element.classList.add('active');
+            // Carica prodotti della categoria
+            loadProducts(category);
+        }
+
+        // Aggiungi al carrello
+        function addToCart(name, price) {
+            cartTotal += price;
+            cartItems.push({ name, price });
+            updateCartDisplay();
+            alert(`${name} aggiunto al carrello!`);
+        }
+
+        // Aggiorna display carrello
+        function updateCartDisplay() {
+            document.querySelector('.cart-total').textContent = `€${cartTotal.toFixed(2)}`;
+        }
+
+        // Mostra carrello
+        function showCart() {
+            if (cartItems.length === 0) {
+                alert('Il carrello è vuoto!');
+                return;
+            }
+            
+            let message = 'Carrello:\n\n';
+            cartItems.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} - €${item.price.toFixed(2)}\n`;
+            });
+            message += `\nTotale: €${cartTotal.toFixed(2)}`;
+            alert(message);
+        }
+
+        // Mostra modal account
+        function showAccountModal() {
+            document.getElementById('account-modal').classList.add('active');
+        }
+
+        // Chiudi modal account
+        function closeAccountModal() {
+            document.getElementById('account-modal').classList.remove('active');
+        }
+
+        // Login finto
+        function login() {
+            alert('Accesso effettuato con successo! (Simulazione)');
+            closeAccountModal();
+        }
+
+        // Carica prodotti iniziali
+        loadProducts('alimentari');
+    </script>
+</body>
+</html>
