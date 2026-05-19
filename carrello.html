@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrello - Coop</title>
-    <link rel="stylesheet" href="libreria.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        .cart-header {
+        .cartheader {
             background: var(--header-bg);
             backdrop-filter: saturate(180%) blur(24px);
             -webkit-backdrop-filter: saturate(180%) blur(24px);
@@ -21,27 +21,27 @@
             right: 0;
             z-index: 1000;
         }
-        .cart-logo {
+        .cartlogo {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
             color: var(--text);
         }
-        .cart-logo img {
+        .cartlogo img {
             height: 40px;
         }
-        .cart-logo span {
+        .cartlogo span {
             font-size: 18px;
             font-weight: 600;
         }
-        .cart-main {
+        .cartmain {
             padding-top: 80px;
             max-width: 1080px;
             margin: 0 auto;
             padding: 100px 44px;
         }
-        .cart-title {
+        .carttitle {
             font-size: clamp(34px, 5.5vw, 56px);
             font-weight: 700;
             line-height: 1.06;
@@ -49,13 +49,13 @@
             color: var(--text);
             margin-bottom: 18px;
         }
-        .cart-items {
+        .cartitems {
             display: flex;
             flex-direction: column;
             gap: 16px;
             margin-bottom: 40px;
         }
-        .cart-item {
+        .cartitem {
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -65,29 +65,29 @@
             justify-content: space-between;
             transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
         }
-        .cart-item:hover {
+        .cartitem:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow);
         }
-        .cart-item-info {
+        .cartiteminfo {
             display: flex;
             align-items: center;
             gap: 20px;
         }
-        .cart-item-icon {
+        .cartitemicon {
             font-size: 40px;
         }
-        .cart-item-name {
+        .cartitemname {
             font-size: 17px;
             font-weight: 600;
             color: var(--text);
         }
-        .cart-item-price {
+        .cartitemprice {
             font-size: 20px;
             font-weight: 700;
             color: var(--text);
         }
-        .cart-item-remove {
+        .cartitemremove {
             font-family: var(--font);
             font-size: 13px;
             font-weight: 500;
@@ -99,10 +99,10 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        .cart-item-remove:hover {
+        .cartitemremove:hover {
             background: rgba(227, 24, 55, 0.20);
         }
-        .cart-summary {
+        .cartsummary {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(20px);
@@ -112,20 +112,20 @@
             max-width: 400px;
             margin-left: auto;
         }
-        .cart-summary-title {
+        .cartsummarytitle {
             font-size: 19px;
             font-weight: 600;
             color: var(--text);
             margin-bottom: 20px;
         }
-        .cart-summary-row {
+        .cartsummaryrow {
             display: flex;
             justify-content: space-between;
             margin-bottom: 12px;
             font-size: 15px;
             color: var(--text2);
         }
-        .cart-summary-total {
+        .cartsummarytotal {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
@@ -135,7 +135,7 @@
             font-weight: 700;
             color: var(--text);
         }
-        .btn-checkout {
+        .btncheckout {
             width: 100%;
             font-family: var(--font);
             font-size: 15px;
@@ -149,11 +149,11 @@
             margin-top: 20px;
             transition: opacity 0.2s, transform 0.15s;
         }
-        .btn-checkout:hover {
+        .btncheckout:hover {
             opacity: 0.85;
             transform: scale(0.99);
         }
-        .btn-back {
+        .btnback {
             font-family: var(--font);
             font-size: 14px;
             font-weight: 500;
@@ -166,19 +166,19 @@
             text-decoration: none;
             transition: background 0.2s;
         }
-        .btn-back:hover {
+        .btnback:hover {
             background: var(--glass-bg);
         }
-        .empty-cart {
+        .emptycart {
             text-align: center;
             padding: 60px 20px;
             color: var(--text2);
         }
-        .empty-cart-icon {
+        .emptycarticon {
             font-size: 64px;
             margin-bottom: 20px;
         }
-        .empty-cart h3 {
+        .emptycart h3 {
             font-size: 24px;
             font-weight: 600;
             color: var(--text);
@@ -187,45 +187,45 @@
     </style>
 </head>
 <body>
-    <div class="cart-header">
-        <a href="home.html" class="cart-logo">
+    <div class="cartheader">
+        <a href="home.html" class="cartlogo">
             <img src="img/Coop.png" alt="Coop Logo">
-            <span>Coop</span>
+            <span>Shop</span>
         </a>
-        <a href="home.html" class="btn-back">Torna alla Home</a>
+        <a href="home.html" class="btnback">Torna alla Home</a>
     </div>
 
-    <div class="cart-main">
-        <h1 class="cart-title">Il tuo carrello</h1>
+    <div class="cartmain">
+        <h1 class="carttitle">Il tuo carrello</h1>
         
         <div id="cart-content">
-            <div class="cart-items" id="cart-items">
+            <div class="cartitems" id="cart-items">
                 <!-- Gli elementi del carrello verranno caricati qui -->
             </div>
             
-            <div class="cart-summary" id="cart-summary">
-                <h3 class="cart-summary-title">Riepilogo</h3>
-                <div class="cart-summary-row">
+            <div class="cartsummary" id="cart-summary">
+                <h3 class="cartsummarytitle">Riepilogo</h3>
+                <div class="cartsummaryrow">
                     <span>Subtotale</span>
                     <span id="subtotal">€0.00</span>
                 </div>
-                <div class="cart-summary-row">
+                <div class="cartsummaryrow">
                     <span>Spedizione</span>
                     <span>Gratuita</span>
                 </div>
-                <div class="cart-summary-total">
+                <div class="cartsummarytotal">
                     <span>Totale</span>
                     <span id="total">€0.00</span>
                 </div>
-                <button class="btn-checkout" onclick="checkout()">Procedi al checkout</button>
+                <button class="btncheckout" onclick="checkout()">Procedi al checkout</button>
             </div>
         </div>
 
-        <div class="empty-cart" id="empty-cart" style="display: none;">
-            <div class="empty-cart-icon">🛒</div>
+        <div class="emptycart" id="empty-cart" style="display: none;">
+            <div class="emptycarticon">🛒</div>
             <h3>Il tuo carrello è vuoto</h3>
             <p>Aggiungi alcuni prodotti per continuare</p>
-            <a href="home.html" class="btn-back" style="margin-top: 20px; display: inline-block;">Torna allo shop</a>
+            <a href="home.html" class="btnback" style="margin-top: 20px; display: inline-block;">Torna allo shop</a>
         </div>
     </div>
 
@@ -256,15 +256,15 @@
             
             cartItems.forEach((item, index) => {
                 const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
+                cartItem.className = 'cartitem';
                 cartItem.innerHTML = `
-                    <div class="cart-item-info">
-                        <div class="cart-item-icon">${item.icon}</div>
-                        <div class="cart-item-name">${item.name}</div>
+                    <div class="cartiteminfo">
+                        <div class="cartitemicon">${item.icon}</div>
+                        <div class="cartitemname">${item.name}</div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 20px;">
-                        <div class="cart-item-price">€${item.price.toFixed(2)}</div>
-                        <button class="cart-item-remove" onclick="removeFromCart(${index})">Rimuovi</button>
+                        <div class="cartitemprice">€${item.price.toFixed(2)}</div>
+                        <button class="cartitemremove" onclick="removeFromCart(${index})">Rimuovi</button>
                     </div>
                 `;
                 cartItemsContainer.appendChild(cartItem);

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coop - Supermercato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Barra superiore -->
+    <div class="coopheader">
+        <a href="home.html" class="cooplogo">
+            <img src="img/Coop.png" alt="Coop Logo">
+            <span>Shop</span>
+        </a>
+        <div class="coopnav">
+            <a href="carrello.html" class="coopcart">
+                <span>Carrello</span>
+                <span id="cart-total">€0.00</span>
+            </a>
+            <button class="coopaccount" onclick="showAccountModal()">
+                <span>Account</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Layout principale -->
+    <div class="coopmain">
+        <!-- Barra laterale -->
+        <div class="coopsidebar">
+            <h2>Categorie</h2>
+            <div class="coopcategory" onclick="selectCategory(this, 'surgelati')">
+                <span>🧊</span>
+                <span>Reparto Surgelati</span>
+            </div>
+        </div>
+
+        <!-- Contenuto principale -->
+        <div class="coopcontent">
+            <h1 id="category-title">Reparto Alimentari</h1>
+            <div class="shop-panel active" id="panel-kit">
+                <div class="kit-grid" id="products-grid">
+                    <!-- I prodotti verranno caricati qui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Account -->
+    <div class="modal-overlay" id="account-modal">
+        <div class="modal-box">
+            <h3>Accedi al tuo account</h3>
+            <p>Inserisci le tue credenziali per accedere</p>
+            <div class="fgroup">
+                <label class="flabel">Email</label>
+                <input type="email" class="finput" placeholder="Inserisci la tua email">
+            </div>
+            <div class="fgroup">
+                <label class="flabel">Password</label>
+                <input type="password" class="finput" placeholder="Inserisci la tua password">
+            </div>
+            <button class="btn-submit" onclick="login()">Accedi</button>
+            <button class="btn-close" onclick="closeAccountModal()">Chiudi</button>
+        </div>
+    </div>
+
+    <script>
+        // Dati del carrello
+        let cartTotal = 0;
+        let cartItems = [];
+
+        // Dati dei prodotti per categoria
+        const products = {
+            surgelati: [
+                { name: "Piselli Surgelati", price: 2.00, icon: "" },
+                { name: "Patatine Fritte", price: 3.50, icon: "" },
+                { name: "Gelato Vaniglia", price: 5.99, icon: "" },
+                { name: "Pizza Surgelata", price: 4.50, icon: "" },
+                { name: "Pollo Surgelato", price: 7.50, icon: "" },
+                { name: "Verdure Miste", price: 3.00, icon: "" }
+            ]
+        };
+
+        // Carica i prodotti iniziali
+        function loadProducts(category) {
+            const grid = document.getElementById('products-grid');
+            const title = document.getElementById('category-title');
+            
+            const categoryNames = {
+                alimentari: 'Reparto Alimentari',
+                abbigliamento: 'Reparto Abbigliamento',
+                casalinghi: 'Reparto Casalinghi',
+                panificio: 'Reparto Panificio',
+                surgelati: 'Reparto Surgelati'
+            };
+            
+            title.textContent = categoryNames[category];
+            grid.innerHTML = '';
+            
+            products[category].forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'kit-card';
+                card.innerHTML = `
+                    <div class="kit-icon">${product.icon}</div>
+                    <div class="kit-name">${product.name}</div>
+                    <div class="kit-desc">Prodotto di qualità Coop</div>
+                    <div class="kit-footer">
+                        <div>
+                            <span class="kit-price">€${product.price.toFixed(2)}</span>
+                        </div>
+                        <button class="btn-get" onclick="addToCart('${product.name}', ${product.price}, '${product.icon}')">Aggiungi</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Seleziona categoria
+        function selectCategory(element, category) {
+            // Rimuovi classe active da tutte le categorie
+            document.querySelectorAll('.coopcategory').forEach(cat => {
+                cat.classList.remove('active');
+            });
+            // Aggiungi classe active alla categoria selezionata
+            element.classList.add('active');
+            // Carica prodotti della categoria
+            loadProducts(category);
+        }
+
+        // Aggiungi al carrello
+        function addToCart(name, price, icon) {
+            cartTotal += price;
+            cartItems.push({ name, price, icon });
+            // Salva nel localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            localStorage.setItem('cartTotal', cartTotal.toString());
+            updateCartDisplay();
+            alert(`${name} aggiunto al carrello!`);
+        }
+
+        // Aggiorna display carrello
+        function updateCartDisplay() {
+            document.getElementById('cart-total').textContent = `€${cartTotal.toFixed(2)}`;
+        }
+
+        // Mostra modal account
+        function showAccountModal() {
+            document.getElementById('account-modal').classList.add('open');
+        }
+
+        // Chiudi modal account
+        function closeAccountModal() {
+            document.getElementById('account-modal').classList.remove('open');
+        }
+
+        // Login finto
+        function login() {
+            alert('Accesso effettuato con successo! (Simulato)');
+            closeAccountModal();
+        }
+
+        // Carica carrello dal localStorage
+        function loadCartFromStorage() {
+            const savedItems = localStorage.getItem('cartItems');
+            const savedTotal = localStorage.getItem('cartTotal');
+            if (savedItems) {
+                cartItems = JSON.parse(savedItems);
+            }
+            if (savedTotal) {
+                cartTotal = parseFloat(savedTotal);
+            }
+            updateCartDisplay();
+        }
+
+        // Carica prodotti iniziali
+        loadProducts('surgelati');
+        loadCartFromStorage();
+    </script>
+</body>
+</html>

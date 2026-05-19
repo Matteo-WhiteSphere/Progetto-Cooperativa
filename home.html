@@ -4,220 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coop - Supermercato</title>
-    <link rel="stylesheet" href="libreria.css">
-    <style>
-        /* Coop-specific styles */
-        .coop-header {
-            background-color: #e31837;
-            padding: 15px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-        .coop-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: white;
-        }
-        .coop-logo img {
-            height: 40px;
-        }
-        .coop-logo span {
-            font-size: 20px;
-            font-weight: 600;
-        }
-        .coop-nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .coop-cart-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 20px;
-            transition: background 0.3s;
-        }
-        .coop-cart-link:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        .coop-account-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: white;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .coop-account-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        .coop-main {
-            padding-top: 80px;
-            display: flex;
-            min-height: 100vh;
-        }
-        .coop-sidebar {
-            width: 250px;
-            background: var(--bg3);
-            padding: 30px 20px;
-            border-right: 1px solid var(--border);
-        }
-        .coop-sidebar h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 20px;
-        }
-        .coop-category {
-            padding: 12px 16px;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text2);
-            margin-bottom: 8px;
-        }
-        .coop-category:hover {
-            background: var(--glass-bg);
-            color: var(--text);
-        }
-        .coop-category.active {
-            background: var(--accent);
-            color: white;
-        }
-        .coop-content {
-            flex: 1;
-            padding: 30px 44px;
-        }
-        .coop-content h1 {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 24px;
-        }
-        /* Override kit-card for Coop */
-        .kit-card .kit-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-        .kit-card .btn-get {
-            background: #e31837;
-            color: white;
-        }
-        .kit-card .btn-get:hover {
-            background: #c41530;
-        }
-        /* Modal account */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 2000;
-            background: rgba(0,0,0,0.52);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s var(--ease);
-        }
-        .modal-overlay.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .modal-box {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(48px);
-            -webkit-backdrop-filter: blur(48px);
-            border-radius: 28px;
-            padding: 44px;
-            max-width: 420px;
-            width: 100%;
-            text-align: center;
-        }
-        .modal-box h3 {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 8px;
-        }
-        .modal-box > p {
-            font-size: 14px;
-            color: var(--text2);
-            margin-bottom: 26px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Barra superiore -->
-    <div class="coop-header">
-        <a href="home.html" class="coop-logo">
+    <div class="coopheader">
+        <a href="home.html" class="cooplogo">
             <img src="img/Coop.png" alt="Coop Logo">
-            <span>Coop</span>
+            <span>Shop</span>
         </a>
-        <div class="coop-nav">
-            <a href="carrello.html" class="coop-cart-link">
-                <span>🛒</span>
+        <div class="coopnav">
+            <a href="carrello.html" class="coopcart">
+                <span>Carrello</span>
                 <span id="cart-total">€0.00</span>
             </a>
-            <button class="coop-account-btn" onclick="showAccountModal()">
-                <span>👤</span>
+            <button class="coopaccount" onclick="showAccountModal()">
                 <span>Account</span>
             </button>
         </div>
     </div>
 
     <!-- Layout principale -->
-    <div class="coop-main">
+    <div class="coopmain">
         <!-- Barra laterale -->
-        <div class="coop-sidebar">
+        <div class="coopsidebar">
             <h2>Categorie</h2>
-            <div class="coop-category active" onclick="selectCategory(this, 'alimentari')">
-                <span>🍎</span>
-                <span>Reparto Alimentari</span>
-            </div>
-            <div class="coop-category" onclick="selectCategory(this, 'abbigliamento')">
-                <span>👕</span>
-                <span>Reparto Abbigliamento</span>
-            </div>
-            <div class="coop-category" onclick="selectCategory(this, 'casalinghi')">
-                <span>🏠</span>
-                <span>Reparto Casalinghi</span>
-            </div>
-            <div class="coop-category" onclick="selectCategory(this, 'panificio')">
-                <span>🍞</span>
-                <span>Reparto Panificio</span>
-            </div>
-            <div class="coop-category" onclick="selectCategory(this, 'surgelati')">
-                <span>❄️</span>
+            <div class="coopcategory" onclick="selectCategory(this, 'surgelati')">
+                <span>🧊</span>
                 <span>Reparto Surgelati</span>
             </div>
         </div>
 
         <!-- Contenuto principale -->
-        <div class="coop-content">
+        <div class="coopcontent">
             <h1 id="category-title">Reparto Alimentari</h1>
+            <div class="volantini-banner">
+                <img src="img/volantini.png" alt="Volantini Coop">
+            </div>
             <div class="shop-panel active" id="panel-kit">
                 <div class="kit-grid" id="products-grid">
                     <!-- I prodotti verranno caricati qui -->
@@ -298,7 +121,7 @@
         // Seleziona categoria
         function selectCategory(element, category) {
             // Rimuovi classe active da tutte le categorie
-            document.querySelectorAll('.coop-category').forEach(cat => {
+            document.querySelectorAll('.coopcategory').forEach(cat => {
                 cat.classList.remove('active');
             });
             // Aggiungi classe active alla categoria selezionata
@@ -335,7 +158,7 @@
 
         // Login finto
         function login() {
-            alert('Accesso effettuato con successo! (Simulazione)');
+            alert('Accesso effettuato con successo! (Simulato)');
             closeAccountModal();
         }
 
@@ -353,7 +176,7 @@
         }
 
         // Carica prodotti iniziali
-        loadProducts('alimentari');
+        loadProducts('surgelati');
         loadCartFromStorage();
     </script>
 </body>
