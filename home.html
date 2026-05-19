@@ -4,348 +4,243 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coop - Supermercato</title>
+    <link rel="stylesheet" href="libreria.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-
-        /* Barra superiore */
-        .top-bar {
+        /* Coop-specific styles */
+        .coop-header {
             background-color: #e31837;
-            color: white;
-            padding: 15px 20px;
+            padding: 15px 28px;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 50px;
-            margin-right: 10px;
-        }
-
-        .logo span {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .top-right {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .cart {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px 15px;
-            background-color: white;
-            color: #e31837;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .cart:hover {
-            background-color: #f0f0f0;
-        }
-
-        .cart-icon {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-
-        .cart-total {
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .account {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px 15px;
-            background-color: white;
-            color: #e31837;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .account:hover {
-            background-color: #f0f0f0;
-        }
-
-        .account-icon {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-
-        /* Layout principale */
-        .main-container {
-            display: flex;
-            min-height: calc(100vh - 80px);
-        }
-
-        /* Barra laterale */
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px 0;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 20px;
-            color: #e31837;
-        }
-
-        .category {
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-left: 4px solid transparent;
-        }
-
-        .category:hover {
-            background-color: #34495e;
-            border-left-color: #e31837;
-        }
-
-        .category.active {
-            background-color: #34495e;
-            border-left-color: #e31837;
-        }
-
-        .category-icon {
-            margin-right: 10px;
-        }
-
-        /* Contenuto principale */
-        .content {
-            flex: 1;
-            padding: 30px;
-        }
-
-        .content h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        /* Modal account */
-        .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
+            right: 0;
             z-index: 1000;
         }
-
-        .modal.active {
+        .coop-logo {
             display: flex;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 400px;
-            max-width: 90%;
-        }
-
-        .modal-content h2 {
-            color: #e31837;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #e31837;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
             color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
         }
-
-        .btn:hover {
-            background-color: #c41530;
+        .coop-logo img {
+            height: 40px;
         }
-
-        .close-modal {
-            margin-top: 10px;
-            background-color: #7f8c8d;
+        .coop-logo span {
+            font-size: 20px;
+            font-weight: 600;
         }
-
-        .close-modal:hover {
-            background-color: #6c7a7d;
-        }
-
-        /* Prodotti di esempio */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        .coop-nav {
+            display: flex;
+            align-items: center;
             gap: 20px;
-            margin-top: 20px;
         }
-
-        .product-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
+        .coop-cart-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            transition: background 0.3s;
         }
-
-        .product-image {
-            width: 100%;
-            height: 150px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            margin-bottom: 10px;
+        .coop-cart-link:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .coop-account-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .coop-account-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .coop-main {
+            padding-top: 80px;
+            display: flex;
+            min-height: 100vh;
+        }
+        .coop-sidebar {
+            width: 250px;
+            background: var(--bg3);
+            padding: 30px 20px;
+            border-right: 1px solid var(--border);
+        }
+        .coop-sidebar h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+        .coop-category {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text2);
+            margin-bottom: 8px;
+        }
+        .coop-category:hover {
+            background: var(--glass-bg);
+            color: var(--text);
+        }
+        .coop-category.active {
+            background: var(--accent);
+            color: white;
+        }
+        .coop-content {
+            flex: 1;
+            padding: 30px 44px;
+        }
+        .coop-content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+        /* Override kit-card for Coop */
+        .kit-card .kit-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .kit-card .btn-get {
+            background: #e31837;
+            color: white;
+        }
+        .kit-card .btn-get:hover {
+            background: #c41530;
+        }
+        /* Modal account */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0,0,0,0.52);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s var(--ease);
         }
-
-        .product-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #2c3e50;
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
         }
-
-        .product-price {
-            color: #e31837;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .modal-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(48px);
+            -webkit-backdrop-filter: blur(48px);
+            border-radius: 28px;
+            padding: 44px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
         }
-
-        .add-to-cart {
-            padding: 8px 15px;
-            background-color: #e31837;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        .modal-box h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
         }
-
-        .add-to-cart:hover {
-            background-color: #c41530;
+        .modal-box > p {
+            font-size: 14px;
+            color: var(--text2);
+            margin-bottom: 26px;
         }
     </style>
 </head>
 <body>
     <!-- Barra superiore -->
-    <div class="top-bar">
-        <div class="logo">
+    <div class="coop-header">
+        <a href="home.html" class="coop-logo">
             <img src="img/Coop.png" alt="Coop Logo">
             <span>Coop</span>
-        </div>
-        <div class="top-right">
-            <div class="cart" onclick="showCart()">
-                <span class="cart-icon">🛒</span>
-                <span class="cart-total">€0.00</span>
-            </div>
-            <div class="account" onclick="showAccountModal()">
-                <span class="account-icon">👤</span>
+        </a>
+        <div class="coop-nav">
+            <a href="carrello.html" class="coop-cart-link">
+                <span>🛒</span>
+                <span id="cart-total">€0.00</span>
+            </a>
+            <button class="coop-account-btn" onclick="showAccountModal()">
+                <span>👤</span>
                 <span>Account</span>
-            </div>
+            </button>
         </div>
     </div>
 
     <!-- Layout principale -->
-    <div class="main-container">
+    <div class="coop-main">
         <!-- Barra laterale -->
-        <div class="sidebar">
+        <div class="coop-sidebar">
             <h2>Categorie</h2>
-            <div class="category active" onclick="selectCategory(this, 'alimentari')">
-                <span class="category-icon">🍎</span>
+            <div class="coop-category active" onclick="selectCategory(this, 'alimentari')">
+                <span>🍎</span>
                 <span>Reparto Alimentari</span>
             </div>
-            <div class="category" onclick="selectCategory(this, 'abbigliamento')">
-                <span class="category-icon">👕</span>
+            <div class="coop-category" onclick="selectCategory(this, 'abbigliamento')">
+                <span>👕</span>
                 <span>Reparto Abbigliamento</span>
             </div>
-            <div class="category" onclick="selectCategory(this, 'casalinghi')">
-                <span class="category-icon">🏠</span>
+            <div class="coop-category" onclick="selectCategory(this, 'casalinghi')">
+                <span>🏠</span>
                 <span>Reparto Casalinghi</span>
             </div>
-            <div class="category" onclick="selectCategory(this, 'panificio')">
-                <span class="category-icon">🍞</span>
+            <div class="coop-category" onclick="selectCategory(this, 'panificio')">
+                <span>🍞</span>
                 <span>Reparto Panificio</span>
             </div>
-            <div class="category" onclick="selectCategory(this, 'surgelati')">
-                <span class="category-icon">❄️</span>
+            <div class="coop-category" onclick="selectCategory(this, 'surgelati')">
+                <span>❄️</span>
                 <span>Reparto Surgelati</span>
             </div>
         </div>
 
         <!-- Contenuto principale -->
-        <div class="content">
+        <div class="coop-content">
             <h1 id="category-title">Reparto Alimentari</h1>
-            <div class="products-grid" id="products-grid">
-                <!-- I prodotti verranno caricati qui -->
+            <div class="shop-panel active" id="panel-kit">
+                <div class="kit-grid" id="products-grid">
+                    <!-- I prodotti verranno caricati qui -->
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Modal Account -->
-    <div class="modal" id="account-modal">
-        <div class="modal-content">
-            <h2>Accedi al tuo account</h2>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" placeholder="Inserisci la tua email">
+    <div class="modal-overlay" id="account-modal">
+        <div class="modal-box">
+            <h3>Accedi al tuo account</h3>
+            <p>Inserisci le tue credenziali per accedere</p>
+            <div class="fgroup">
+                <label class="flabel">Email</label>
+                <input type="email" class="finput" placeholder="Inserisci la tua email">
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" placeholder="Inserisci la tua password">
+            <div class="fgroup">
+                <label class="flabel">Password</label>
+                <input type="password" class="finput" placeholder="Inserisci la tua password">
             </div>
-            <button class="btn" onclick="login()">Accedi</button>
-            <button class="btn close-modal" onclick="closeAccountModal()">Chiudi</button>
+            <button class="btn-submit" onclick="login()">Accedi</button>
+            <button class="btn-close" onclick="closeAccountModal()">Chiudi</button>
         </div>
     </div>
 
@@ -416,12 +311,17 @@
             
             products[category].forEach(product => {
                 const card = document.createElement('div');
-                card.className = 'product-card';
+                card.className = 'kit-card';
                 card.innerHTML = `
-                    <div class="product-image">${product.icon}</div>
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-price">€${product.price.toFixed(2)}</div>
-                    <button class="add-to-cart" onclick="addToCart('${product.name}', ${product.price})">Aggiungi al carrello</button>
+                    <div class="kit-icon">${product.icon}</div>
+                    <div class="kit-name">${product.name}</div>
+                    <div class="kit-desc">Prodotto di qualità Coop</div>
+                    <div class="kit-footer">
+                        <div>
+                            <span class="kit-price">€${product.price.toFixed(2)}</span>
+                        </div>
+                        <button class="btn-get" onclick="addToCart('${product.name}', ${product.price}, '${product.icon}')">Aggiungi</button>
+                    </div>
                 `;
                 grid.appendChild(card);
             });
@@ -430,7 +330,7 @@
         // Seleziona categoria
         function selectCategory(element, category) {
             // Rimuovi classe active da tutte le categorie
-            document.querySelectorAll('.category').forEach(cat => {
+            document.querySelectorAll('.coop-category').forEach(cat => {
                 cat.classList.remove('active');
             });
             // Aggiungi classe active alla categoria selezionata
@@ -440,41 +340,29 @@
         }
 
         // Aggiungi al carrello
-        function addToCart(name, price) {
+        function addToCart(name, price, icon) {
             cartTotal += price;
-            cartItems.push({ name, price });
+            cartItems.push({ name, price, icon });
+            // Salva nel localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            localStorage.setItem('cartTotal', cartTotal.toString());
             updateCartDisplay();
             alert(`${name} aggiunto al carrello!`);
         }
 
         // Aggiorna display carrello
         function updateCartDisplay() {
-            document.querySelector('.cart-total').textContent = `€${cartTotal.toFixed(2)}`;
-        }
-
-        // Mostra carrello
-        function showCart() {
-            if (cartItems.length === 0) {
-                alert('Il carrello è vuoto!');
-                return;
-            }
-            
-            let message = 'Carrello:\n\n';
-            cartItems.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} - €${item.price.toFixed(2)}\n`;
-            });
-            message += `\nTotale: €${cartTotal.toFixed(2)}`;
-            alert(message);
+            document.getElementById('cart-total').textContent = `€${cartTotal.toFixed(2)}`;
         }
 
         // Mostra modal account
         function showAccountModal() {
-            document.getElementById('account-modal').classList.add('active');
+            document.getElementById('account-modal').classList.add('open');
         }
 
         // Chiudi modal account
         function closeAccountModal() {
-            document.getElementById('account-modal').classList.remove('active');
+            document.getElementById('account-modal').classList.remove('open');
         }
 
         // Login finto
@@ -483,8 +371,22 @@
             closeAccountModal();
         }
 
+        // Carica carrello dal localStorage
+        function loadCartFromStorage() {
+            const savedItems = localStorage.getItem('cartItems');
+            const savedTotal = localStorage.getItem('cartTotal');
+            if (savedItems) {
+                cartItems = JSON.parse(savedItems);
+            }
+            if (savedTotal) {
+                cartTotal = parseFloat(savedTotal);
+            }
+            updateCartDisplay();
+        }
+
         // Carica prodotti iniziali
         loadProducts('alimentari');
+        loadCartFromStorage();
     </script>
 </body>
 </html>
