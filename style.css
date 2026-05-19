@@ -234,7 +234,22 @@
         .b-new { background: rgba(48,209,88,0.14); color: var(--accent2); }
         .b-pop { background: rgba(41,151,255,0.14); color: var(--accent); }
         .b-rare { background: rgba(255,159,10,0.14); color: #FF9F0A; }
-        .kit-icon { font-size: 36px; margin-bottom: 14px; }
+        .kit-icon {
+          font-size: 36px;
+          margin-bottom: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 120px;
+        }
+        .kit-icon img {
+          max-width: 100%;
+          max-height: 120px;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          display: block;
+        }
         .kit-name { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
         .kit-desc { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 22px; }
         .kit-footer { display: flex; align-items: center; justify-content: space-between; }

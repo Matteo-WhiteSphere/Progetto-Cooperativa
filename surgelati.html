@@ -30,7 +30,6 @@
         <div class="coopsidebar">
             <h2>Categorie</h2>
             <div class="coopcategory" onclick="selectCategory(this, 'surgelati')">
-                <span>🧊</span>
                 <span>Reparto Surgelati</span>
             </div>
         </div>
@@ -72,12 +71,12 @@
         // Dati dei prodotti per categoria
         const products = {
             surgelati: [
-                { name: "Piselli Surgelati", price: 2.00, icon: "" },
-                { name: "Patatine Fritte", price: 3.50, icon: "" },
-                { name: "Gelato Vaniglia", price: 5.99, icon: "" },
-                { name: "Pizza Surgelata", price: 4.50, icon: "" },
-                { name: "Pollo Surgelato", price: 7.50, icon: "" },
-                { name: "Verdure Miste", price: 3.00, icon: "" }
+                { name: "Piselli Surgelati", price: 2.00, icon: "img/Piselli.png" },
+                { name: "Patatine Fritte", price: 3.50, icon: "img/Patatine.png" },
+                { name: "Gelato Vaniglia", price: 5.99, icon: "img/Gelato.png" },
+                { name: "Pizza Surgelata", price: 4.50, icon: "img/Pizza.png" },
+                { name: "Pollo Surgelato", price: 7.50, icon: "img/Pollo.png" },
+                { name: "Verdure Miste", price: 3.00, icon: "img/Verdure.png" }
             ]
         };
 
@@ -101,7 +100,9 @@
                 const card = document.createElement('div');
                 card.className = 'kit-card';
                 card.innerHTML = `
-                    <div class="kit-icon">${product.icon}</div>
+                    <div class="kit-icon">
+                        <img src="${product.icon}" alt="${product.name}">
+                    </div>
                     <div class="kit-name">${product.name}</div>
                     <div class="kit-desc">Prodotto di qualità Coop</div>
                     <div class="kit-footer">
